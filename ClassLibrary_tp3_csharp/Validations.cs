@@ -4,23 +4,36 @@ using System.Text.RegularExpressions;
 
 namespace ClassLibrary_tp3_csharp
 {
-    class Validations
+    public static class Validations
     {
-        public static List<bool> StringValidation(string evaluate) {
-            List<bool> validations = new List<bool>();
+        public static List<string> StringValidation(string evaluate) {
+            List<string> validations = new List<string>();
 
-           // new Action(() => { /* do some suck things */ })();
-           // int v = new Func<int>(() => { return 123; })();
-           
-            bool stringOnlyLetters = new Func<bool>(() => { return Regex.IsMatch(evaluate, @"^[a-zA-Z]+$"); })();
-            bool stringOnlyDate = new Func<bool>(() => { return Regex.IsMatch(evaluate, @"^[0-9/]+$"); })();
-            bool stringOnlyNumber = new Func<bool>(() => { return Regex.IsMatch(evaluate, @"^[0-9]+$"); })();
-
+            var stringOnlyLetters = new Func<string>(() => {
+                return Regex.IsMatch(evaluate, @"^[a-zA-Z]+$") ? "valid" : "Text contains numbers or invalid characters.";
+            })();
+            var stringOnlyNumber = new Func<string>(() => {
+                return Regex.IsMatch(evaluate, @"^[0-9]+$") ? "valid" : "Text must contains only integers numbers.";
+            })();
             validations.Add(stringOnlyLetters);
-            validations.Add(stringOnlyDate);
             validations.Add(stringOnlyNumber);
-
             return validations;
+        }
+
+        public static DateTime DateValidation(string evaluate) {
+            return new Func<DateTime>(() => {
+                var dateParsed = new DateTime();
+
+                try
+                {
+                    dateParsed = DateTime.Parse(evaluate);
+                }
+                catch (Exception)
+                {
+                    dateParsed = default;
+                }
+                return dateParsed;
+            })(); 
         }
     }
 }

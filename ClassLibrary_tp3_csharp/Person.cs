@@ -2,7 +2,7 @@
 
 namespace ClassLibrary_tp3_csharp
 {
-    class Person
+    public class Person
     {
         public Person(string firstName, string surnameName, DateTime birthday)
         {

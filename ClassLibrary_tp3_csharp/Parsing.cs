@@ -1,24 +1,58 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace ClassLibrary_tp3_csharp
 {
-    class Parsing
+    public static class Parsing
     {
-        public static int StringToInt(string n)
+
+        public static List<int> StringToInt(string evaluate)
         {
-            return Int32.Parse(n);
+            if (Validations.StringValidation(evaluate)[1].Equals("valid"))
+            {
+                List<int> result = new List<int>();
+                try
+                {
+                    var number = Int32.Parse(evaluate);
+                    result.Add(number);
+                    return result;
+                }
+                catch (FormatException)
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public static DateTime ConvertToDateTimeObject(string day, string month, string year)
+        public static List<DateTime> ConvertToDateTimeObject(string day, string month, string year)
         {
-            return new DateTime(StringToInt(year), StringToInt(month), StringToInt(day),
-                   new System.Globalization.CultureInfo(Thread.CurrentThread.CurrentCulture.Name, false).Calendar);
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
+            var evaluate = year + "/" + month + "/" + day;
+            if (Validations.DateValidation(evaluate) != default)
+            {
+                List<DateTime> result = new List<DateTime>();
+                try
+                {
+                    result.Add(new DateTime(StringToInt(year)[0], StringToInt(month)[0], StringToInt(day)[0],
+                    new System.Globalization.CultureInfo(Thread.CurrentThread.CurrentCulture.Name, false).Calendar));
+                    return result;
+                }
+                catch (FormatException)
+                {
+                    result.Add(default);
+                    return result;
+                }
+            }
+            else
+            {
+                return null;
+            }
+            //return new DateTime(StringToInt(year)[0], StringToInt(month)[0], StringToInt(day)[0],
+            //       new System.Globalization.CultureInfo(Thread.CurrentThread.CurrentCulture.Name, false).Calendar);
         }
     }
 }
