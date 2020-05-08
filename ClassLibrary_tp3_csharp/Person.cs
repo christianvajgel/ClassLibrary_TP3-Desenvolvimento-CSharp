@@ -4,6 +4,8 @@ namespace ClassLibrary_tp3_csharp
 {
     public class Person
     {
+        public Person() { }
+
         public Person(int id, string firstName, string surnameName, DateTime birthday)
         {
             Id = id;

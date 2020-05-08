@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassLibrary_tp3_csharp
 {
@@ -24,11 +25,43 @@ namespace ClassLibrary_tp3_csharp
             })();
         }
 
-        //public static IEnumerable<Person> SearchPeople(string term) 
-        public static IEnumerable<Person> SearchPeople() 
+        public static IEnumerable<Person> SearchPeople(string termFirstName, string termSurname)
+        //public static IEnumerable<Person> SearchPeople() 
         {
-            return people;
-            //return people.Where(person => person.FirstName.Contains(term, StringComparison.InvariantCultureIgnoreCase));
+            return people.Where(person => 
+                person.FirstName.Contains(termFirstName, StringComparison.InvariantCultureIgnoreCase) || 
+                person.SurnameName.Contains(termSurname, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+
+        public static int DateCountdown(string id) 
+        {
+            //var birthdayPerson = SearchPerson(Parsing.StringToInt(id)[0]);
+            return new Func<int>(() => { return CalculateDays(SearchPerson(Parsing.StringToInt(id)[0])); })();
+        }
+
+
+        public static Person SearchPerson(int id) 
+        {
+            var PersonObject = new Person();
+            foreach (var match in people)
+            {
+                if (match.Id == id) { PersonObject = people[match.Id]; }
+            }
+            return PersonObject;
+        }
+
+        public static int CalculateDays(Person person) 
+        {
+            var nextBirthday = person.Birthday.AddYears(DateTime.Today.Year - person.Birthday.Year);
+            if (nextBirthday < DateTime.Today) { nextBirthday = nextBirthday.AddYears(1); }
+            return (nextBirthday - DateTime.Today).Days;
+        }
+
+        public static string PersonFullName(string id) 
+        {
+            var person = SearchPerson(Parsing.StringToInt(id)[0]);
+            return $"{person.FirstName} {person.SurnameName}";
         }
 
         public static string UpdatePerson(Person person, Person updated) 
@@ -47,6 +80,7 @@ namespace ClassLibrary_tp3_csharp
                 }
             })();
         }
+
         public static string DeletePerson(Person person) 
         {
             return new Func<String>(() => {
