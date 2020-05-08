@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 
 namespace ClassLibrary_tp3_csharp
 {
@@ -22,14 +19,16 @@ namespace ClassLibrary_tp3_csharp
         public static string AddPerson(Person person) 
         {
             return new Func<String>(() => {
-                if (CheckContactExistence(person)) { return "Person already exists."; }
-                else { return "Person added."; }
+            if (CheckContactExistence(person)) { return "Person already exists."; }
+                else { people.Add(person); return "Person added."; }
             })();
         }
 
-        public static IEnumerable<Person> SearchPeople(string term) 
+        //public static IEnumerable<Person> SearchPeople(string term) 
+        public static IEnumerable<Person> SearchPeople() 
         {
-            return people.Where(person => person.FirstName.Contains(term, StringComparison.InvariantCultureIgnoreCase));
+            return people;
+            //return people.Where(person => person.FirstName.Contains(term, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public static string UpdatePerson(Person person, Person updated) 
@@ -65,18 +64,16 @@ namespace ClassLibrary_tp3_csharp
         private static Boolean CheckContactExistence(Person person) 
         {
             return new Func<Boolean>(() => {
-                var ok = false;
                 foreach (var match in people)
                 {
                     if (match.FirstName.Equals(person.FirstName)
                         && match.SurnameName.Equals(person.SurnameName)
                         && match.Birthday.Equals(person.Birthday))
                     {
-                        ok = true;
-                        break;
+                        return true;
                     }
                 }
-                return ok;
+                return false;
             })();
         }
     }
