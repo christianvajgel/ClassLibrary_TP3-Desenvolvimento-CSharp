@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace ClassLibrary_tp3_csharp
 {
     public static class Parsing
     {
-
         public static List<int> StringToInt(string evaluate)
         {
             if (Validations.StringValidation(evaluate)[1].Equals("valid"))
@@ -51,8 +50,6 @@ namespace ClassLibrary_tp3_csharp
             {
                 return null;
             }
-            //return new DateTime(StringToInt(year)[0], StringToInt(month)[0], StringToInt(day)[0],
-            //       new System.Globalization.CultureInfo(Thread.CurrentThread.CurrentCulture.Name, false).Calendar);
         }
     }
 }

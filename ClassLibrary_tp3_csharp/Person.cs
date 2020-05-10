@@ -15,8 +15,11 @@ namespace ClassLibrary_tp3_csharp
         }
 
         public int Id { get; set; }
+
         public string FirstName { get; set; }
+
         public string SurnameName { get; set; }
+
         public DateTime Birthday { get; set; }
     }
 }

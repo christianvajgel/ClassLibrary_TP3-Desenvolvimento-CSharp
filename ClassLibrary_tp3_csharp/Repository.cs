@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace ClassLibrary_tp3_csharp
 {
     public class Repository
     {
-
-        //public Repository(List<Person> people)
-        //{
-        //    People = people ?? throw new ArgumentNullException(nameof(people));
-        //}
-
-        //public List<Person> People { get; set; }
-        ////internal List<Person> People { get => people; set => people = value; }
-
         public static List<Person> people = new List<Person>();
 
         public static string AddPerson(Person person) 
@@ -26,20 +17,16 @@ namespace ClassLibrary_tp3_csharp
         }
 
         public static IEnumerable<Person> SearchPeople(string termFirstName, string termSurname)
-        //public static IEnumerable<Person> SearchPeople() 
         {
             return people.Where(person => 
                 person.FirstName.Contains(termFirstName, StringComparison.InvariantCultureIgnoreCase) || 
                 person.SurnameName.Contains(termSurname, StringComparison.InvariantCultureIgnoreCase));
         }
 
-
         public static int DateCountdown(string id) 
         {
-            //var birthdayPerson = SearchPerson(Parsing.StringToInt(id)[0]);
             return new Func<int>(() => { return CalculateDays(SearchPerson(Parsing.StringToInt(id)[0])); })();
         }
-
 
         public static Person SearchPerson(int id) 
         {
@@ -71,8 +58,10 @@ namespace ClassLibrary_tp3_csharp
                 {
                     people.Remove(person);
                     people.Add(updated);
-                    return $"Contact updated successfully.\nOld data:\n {person.FirstName} {person.SurnameName} | Birthday: {person.Birthday}" +
-                           $"\nNew data:\n {updated.FirstName} {updated.SurnameName} | Birthday: {updated.Birthday}";
+                    return $"Contact updated successfully.\nOld data:\n {person.FirstName} " +
+                           $"{person.SurnameName} | Birthday: {person.Birthday}" +
+                           $"\nNew data:\n {updated.FirstName} {updated.SurnameName} " +
+                           $"| Birthday: {updated.Birthday}";
                 }
                 else
                 {
