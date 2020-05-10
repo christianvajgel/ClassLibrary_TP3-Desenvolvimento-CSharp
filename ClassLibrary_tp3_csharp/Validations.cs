@@ -6,13 +6,16 @@ namespace ClassLibrary_tp3_csharp
 {
     public static class Validations
     {
-        public static List<string> StringValidation(string evaluate) {
+        public static List<string> StringValidation(string evaluate)
+        {
             List<string> validations = new List<string>();
 
-            var stringOnlyLetters = new Func<string>(() => {
+            var stringOnlyLetters = new Func<string>(() =>
+            {
                 return Regex.IsMatch(evaluate, @"^[a-zA-Z]+$") ? "valid" : "Text contains numbers or invalid characters.";
             })();
-            var stringOnlyNumber = new Func<string>(() => {
+            var stringOnlyNumber = new Func<string>(() =>
+            {
                 return Regex.IsMatch(evaluate, @"^[0-9]+$") ? "valid" : "Text must contains only integers numbers.";
             })();
             validations.Add(stringOnlyLetters);
@@ -20,8 +23,10 @@ namespace ClassLibrary_tp3_csharp
             return validations;
         }
 
-        public static DateTime DateValidation(string evaluate) {
-            return new Func<DateTime>(() => {
+        public static DateTime DateValidation(string evaluate)
+        {
+            return new Func<DateTime>(() =>
+            {
                 var dateParsed = new DateTime();
 
                 try
@@ -33,7 +38,7 @@ namespace ClassLibrary_tp3_csharp
                     dateParsed = default;
                 }
                 return dateParsed;
-            })(); 
+            })();
         }
     }
 }

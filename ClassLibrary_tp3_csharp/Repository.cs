@@ -8,27 +8,28 @@ namespace ClassLibrary_tp3_csharp
     {
         public static List<Person> people = new List<Person>();
 
-        public static string AddPerson(Person person) 
+        public static string AddPerson(Person person)
         {
-            return new Func<String>(() => {
-            if (CheckContactExistence(person)) { return "Person already exists."; }
+            return new Func<String>(() =>
+            {
+                if (CheckContactExistence(person)) { return "Person already exists."; }
                 else { people.Add(person); return "Person added."; }
             })();
         }
 
         public static IEnumerable<Person> SearchPeople(string termFirstName, string termSurname)
         {
-            return people.Where(person => 
-                person.FirstName.Contains(termFirstName, StringComparison.InvariantCultureIgnoreCase) || 
+            return people.Where(person =>
+                person.FirstName.Contains(termFirstName, StringComparison.InvariantCultureIgnoreCase) ||
                 person.SurnameName.Contains(termSurname, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public static int DateCountdown(string id) 
+        public static int DateCountdown(string id)
         {
             return new Func<int>(() => { return CalculateDays(SearchPerson(Parsing.StringToInt(id)[0])); })();
         }
 
-        public static Person SearchPerson(int id) 
+        public static Person SearchPerson(int id)
         {
             var PersonObject = new Person();
             foreach (var match in people)
@@ -38,22 +39,23 @@ namespace ClassLibrary_tp3_csharp
             return PersonObject;
         }
 
-        public static int CalculateDays(Person person) 
+        public static int CalculateDays(Person person)
         {
             var nextBirthday = person.Birthday.AddYears(DateTime.Today.Year - person.Birthday.Year);
             if (nextBirthday < DateTime.Today) { nextBirthday = nextBirthday.AddYears(1); }
             return (nextBirthday - DateTime.Today).Days;
         }
 
-        public static string PersonFullName(string id) 
+        public static string PersonFullName(string id)
         {
             var person = SearchPerson(Parsing.StringToInt(id)[0]);
             return $"{person.FirstName} {person.SurnameName}";
         }
 
-        public static string UpdatePerson(Person person, Person updated) 
+        public static string UpdatePerson(Person person, Person updated)
         {
-            return new Func<String>(() => {
+            return new Func<String>(() =>
+            {
                 if (CheckContactExistence(person))
                 {
                     people.Remove(person);
@@ -70,23 +72,26 @@ namespace ClassLibrary_tp3_csharp
             })();
         }
 
-        public static string DeletePerson(Person person) 
+        public static string DeletePerson(Person person)
         {
-            return new Func<String>(() => {
-                if (CheckContactExistence(person)) {
+            return new Func<String>(() =>
+            {
+                if (CheckContactExistence(person))
+                {
                     people.Remove(person);
                     return $"{person.FirstName} {person.SurnameName} successfully deleted.";
                 }
-                else 
-                { 
-                    return "Person added."; 
+                else
+                {
+                    return "Person added.";
                 }
             })();
         }
 
-        private static Boolean CheckContactExistence(Person person) 
+        private static Boolean CheckContactExistence(Person person)
         {
-            return new Func<Boolean>(() => {
+            return new Func<Boolean>(() =>
+            {
                 foreach (var match in people)
                 {
                     if (match.FirstName.Equals(person.FirstName)
